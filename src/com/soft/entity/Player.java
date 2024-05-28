@@ -39,30 +39,30 @@ public class Player extends Entity{
         int futureX, futureY;
 
         if (left) {
-            futureX = x - playerSpeed;
+            futureX = x - collisionCheck;
             if (CanMoveHere(futureX, y, width, height, LevelManager.currentLevelData)) {
-                x = futureX;
+                x -= playerSpeed;
             }
         }
 
         if (right) {
-            futureX = x + playerSpeed;
+            futureX = x + collisionCheck;
             if (CanMoveHere(futureX, y, width, height, LevelManager.currentLevelData)) {
-                x = futureX;
+                x += playerSpeed;
             }
         }
 
         if (up) {
-            futureY = y - playerSpeed;
+            futureY = y - collisionCheck;
             if (CanMoveHere(x, futureY, width, height, LevelManager.currentLevelData)) {
-                y = futureY;
+                y -= playerSpeed;
             }
         }
 
         if (down) {
-            futureY = y + playerSpeed;
+            futureY = y + collisionCheck;
             if (CanMoveHere(x, futureY, width, height, LevelManager.currentLevelData)) {
-                y = futureY;
+                y += playerSpeed;
             }
         }
 
@@ -95,6 +95,13 @@ public class Player extends Entity{
     }
     public void setDown(boolean down) {
         this.down = down;
+    }
+
+    public void setPosition(int x, int y) {
+//        if (CanMoveHere(x, y, width, height, LevelManager.currentLevelData)) {
+//            this.x = x;
+//            this.y = y;
+//        }
     }
 
 }

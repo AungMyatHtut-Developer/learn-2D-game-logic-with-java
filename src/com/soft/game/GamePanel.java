@@ -1,6 +1,7 @@
 package com.soft.game;
 
 import com.soft.handler.KeyBoardHandler;
+import com.soft.handler.MouseHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +16,7 @@ public class GamePanel extends JPanel {
     public GamePanel(Game game) {
         ourGame = game;
         addKeyListener(new KeyBoardHandler(this));
+        addMouseMotionListener(new MouseHandler(this));
         setWindowPrefWidth();
     }
 
