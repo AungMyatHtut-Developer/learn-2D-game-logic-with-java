@@ -3,9 +3,9 @@ package com.soft.entity;
 import com.soft.level.LevelManager;
 
 import java.awt.*;
+import java.util.Arrays;
 
-import static com.soft.entity.EntityConstants.PLAYER_HEIGHT;
-import static com.soft.entity.EntityConstants.PLAYER_WIDTH;
+import static com.soft.entity.EntityConstants.*;
 import static com.soft.game.Game.GAME_HEIGHT;
 import static com.soft.game.Game.GAME_WIDTH;
 import static com.soft.util.CollisionManager.CanMoveHere;
@@ -15,8 +15,12 @@ public class Player extends Entity{
     private int playerSpeed = 5;
     private int collisionCheck = 1;
 
-    private boolean left = false, right = false, up= false, down=false;
+    // normal movement
+    private boolean left = false, right = false, up = false, down = false;
 
+    // jumping
+    private boolean jump = false, onGround = false;
+    private int jumpStrength = 10;
 
     public Player() {
         super(20,20, PLAYER_WIDTH , PLAYER_HEIGHT);
@@ -52,20 +56,44 @@ public class Player extends Entity{
             }
         }
 
-        if (up) {
-            futureY = y - collisionCheck;
-            if (CanMoveHere(x, futureY, width, height, LevelManager.currentLevelData)) {
-                y -= playerSpeed;
-            }
+//        if (up) {
+//            futureY = y - collisionCheck;
+//            if (CanMoveHere(x, futureY, width, height, LevelManager.currentLevelData)) {
+//                y -= playerSpeed;
+//            }
+//        }
+//
+//        if (down) {
+//            futureY = y + collisionCheck;
+//            if (CanMoveHere(x, futureY, width, height, LevelManager.currentLevelData)) {
+//                y += playerSpeed;
+//            }
+//        }
+
+        if (!onGround) {
+            velocityY += GRAVITY;
+        }else{
+            velocityY = 0;
         }
 
-        if (down) {
-            futureY = y + collisionCheck;
-            if (CanMoveHere(x, futureY, width, height, LevelManager.currentLevelData)) {
-                y += playerSpeed;
-            }
+        // Jump
+        if (jump && onGround) {
+            velocityY = -jumpStrength;
+            onGround = false;
         }
 
+        futureY = (int) (y + velocityY);
+
+        if (LevelManager.currentLevelData != null) {
+            if (CanMoveHere(x, futureY, width, height, LevelManager.currentLevelData)) {
+                y += (int) velocityY;
+                onGround = false;
+            } else {
+                // If the player can't move to the future position, they are on the ground
+                onGround = true;
+                velocityY = 0;
+            }
+        }
 
         // Prevent the player from moving out of bounds horizontally
         if (x < 1) {
@@ -79,6 +107,7 @@ public class Player extends Entity{
             y = 0;
         } else if (y > GAME_HEIGHT - PLAYER_HEIGHT) {
             y = GAME_HEIGHT - PLAYER_HEIGHT;
+            onGround = true;
         }
 
     }
@@ -97,11 +126,8 @@ public class Player extends Entity{
         this.down = down;
     }
 
-    public void setPosition(int x, int y) {
-//        if (CanMoveHere(x, y, width, height, LevelManager.currentLevelData)) {
-//            this.x = x;
-//            this.y = y;
-//        }
+    public void jump(boolean jump) {
+        this.jump = jump;
     }
 
 }

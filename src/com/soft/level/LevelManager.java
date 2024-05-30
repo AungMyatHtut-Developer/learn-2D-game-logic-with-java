@@ -8,17 +8,16 @@ public class LevelManager {
 
     private Level level;
     private int currentLevelNumber;
-    public static int[] currentLevelData;
+    public static volatile int[] currentLevelData;
 
     public LevelManager() {
         this.level = new Level();
-        this.currentLevelNumber = 1;
+        this.currentLevelNumber = 2;
     }
 
     public int[] getCurrentLevelData() {
         currentLevelData = level.getLevelData(currentLevelNumber);
         return currentLevelData;
-
     }
 
     public void renderLevel(Graphics g) {

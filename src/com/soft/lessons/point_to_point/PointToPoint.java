@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
-import java.util.stream.DoubleStream;
 
 public class PointToPoint {
 
@@ -39,7 +38,6 @@ class Game implements Runnable {
         this.gameWindow = new GameWindow(gamePanel);
         gamePanel.requestFocus();
         startGame();
-
     }
 
     public void startGame() {

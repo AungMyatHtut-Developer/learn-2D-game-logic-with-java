@@ -33,8 +33,8 @@ public class KeyBoardHandler implements KeyListener {
             case KeyEvent.VK_S, KeyEvent.VK_DOWN ->
                     gamePanel.getOurGame().getPlayer().setDown(true);
             //Jump
-//            case KeyEvent.VK_SPACE ->
-//                gamePanel.getOurGame().getPlayer().setJump(true);
+            case KeyEvent.VK_SPACE ->
+                gamePanel.getOurGame().getPlayer().jump(true);
             //Dash
 //            case KeyEvent.VK_SHIFT ->
 //                gamePanel.getOurGame().getPlayer().setDash();
@@ -58,8 +58,8 @@ public class KeyBoardHandler implements KeyListener {
             case KeyEvent.VK_S, KeyEvent.VK_DOWN ->
                     gamePanel.getOurGame().getPlayer().setDown(false);
             //Jump
-//            case KeyEvent.VK_SPACE ->
-//                    gamePanel.getOurGame().getPlayer().setJump(false);
+            case KeyEvent.VK_SPACE ->
+                    gamePanel.getOurGame().getPlayer().jump(false);
         }
     }
 }

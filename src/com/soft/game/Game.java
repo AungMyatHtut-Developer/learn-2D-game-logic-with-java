@@ -5,6 +5,7 @@ import com.soft.entity.Player;
 import com.soft.level.LevelManager;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public class Game implements Runnable{
 
@@ -78,7 +79,6 @@ public class Game implements Runnable{
                 updateGame();
                 updates++;
             }
-
 
             if (System.nanoTime() - lastFPSCheck >= 1_000_000_000) {
                 lastFPSCheck = System.nanoTime();
