@@ -16,8 +16,8 @@ public class Game implements Runnable{
     public static final float SCALE = 1f;
     public static final int TILE_WIDTH = (int) (50 * SCALE);
     public static final int TILE_HEIGHT = (int) (50 * SCALE);
-    public static final int TOTAL_TILES_IN_WIDTH = 10;
-    public static final int TOTAL_TILES_IN_HEIGHT = 10;
+    public static final int TOTAL_TILES_IN_WIDTH = 25;
+    public static final int TOTAL_TILES_IN_HEIGHT = 15;
 
     public static final int GAME_WIDTH = TILE_WIDTH * TOTAL_TILES_IN_WIDTH;
     public static final int GAME_HEIGHT = TILE_HEIGHT * TOTAL_TILES_IN_HEIGHT;
@@ -95,7 +95,8 @@ public class Game implements Runnable{
     }
 
     public void renderGame(Graphics g) {
-        levelManager.renderLevel(g);
+//        levelManager.renderLevel(g);
+        levelManager.renderLevelTiles(g);
         player.render(g);
     }
 

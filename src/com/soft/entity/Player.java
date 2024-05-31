@@ -3,7 +3,6 @@ package com.soft.entity;
 import com.soft.level.LevelManager;
 
 import java.awt.*;
-import java.util.Arrays;
 
 import static com.soft.entity.EntityConstants.*;
 import static com.soft.game.Game.GAME_HEIGHT;
@@ -20,10 +19,10 @@ public class Player extends Entity{
 
     // jumping
     private boolean jump = false, onGround = false;
-    private int jumpStrength = 10;
+    private int jump_speed = 10;
 
     public Player() {
-        super(20,20, PLAYER_WIDTH , PLAYER_HEIGHT);
+        super(50,50, PLAYER_WIDTH , PLAYER_HEIGHT);
     }
 
     @Override
@@ -40,7 +39,7 @@ public class Player extends Entity{
 
     public void updatePosition() {
 
-        int futureX, futureY;
+        int futureX, futureY = 0;
 
         if (left) {
             futureX = x - collisionCheck;
@@ -76,20 +75,18 @@ public class Player extends Entity{
             velocityY = 0;
         }
 
-        // Jump
+        //Jump
         if (jump && onGround) {
-            velocityY = -jumpStrength;
+            velocityY = - jump_speed;
             onGround = false;
         }
 
         futureY = (int) (y + velocityY);
-
         if (LevelManager.currentLevelData != null) {
-            if (CanMoveHere(x, futureY, width, height, LevelManager.currentLevelData)) {
+            if (CanMoveHere(x, futureY, PLAYER_WIDTH, PLAYER_HEIGHT, LevelManager.currentLevelData)) {
                 y += (int) velocityY;
                 onGround = false;
-            } else {
-                // If the player can't move to the future position, they are on the ground
+            }else{
                 onGround = true;
                 velocityY = 0;
             }

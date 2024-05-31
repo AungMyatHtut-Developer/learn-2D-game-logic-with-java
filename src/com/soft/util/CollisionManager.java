@@ -38,6 +38,11 @@ public class CollisionManager {
             return (tilePixelY) < TILE_HEIGHT / 2; // Check if the y position is in the bottom half
         }
 
+        if (tileIndex == 11 || tileIndex == 2) {
+            int tilePixelY = y % TILE_HEIGHT; // Get y position within the tile
+            return (tilePixelY) >= TILE_HEIGHT / 2; // Check if the y position is in the bottom half
+        }
+
         // Handle partial width tile (value 4)
         if (tileIndex == 4) {
             int tilePixelX = x % TILE_WIDTH; // Get x position within the tile
