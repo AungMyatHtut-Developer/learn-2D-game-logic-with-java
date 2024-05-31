@@ -8,6 +8,7 @@ import java.io.InputStream;
 public class LoadSave {
 
     public static final String TILES_IMG = "my-last-tiles.png";
+    public static final String PLAYER_IMG = "Idle.png";
 
     public static BufferedImage GetResourceImage(String fileName) {
         BufferedImage image = null;

@@ -1,8 +1,10 @@
 package com.soft.entity;
 
 import com.soft.level.LevelManager;
+import com.soft.util.LoadSave;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 import static com.soft.entity.EntityConstants.*;
 import static com.soft.game.Game.GAME_HEIGHT;
@@ -13,22 +15,39 @@ public class Player extends Entity{
 
     private int playerSpeed = 5;
     private int collisionCheck = 1;
+    private BufferedImage[] playerImage;
 
     // normal movement
     private boolean left = false, right = false, up = false, down = false;
 
     // jumping
-    private boolean jump = false, onGround = false;
+    private boolean jump = false, onGround = false, isJumping = false;
     private int jump_speed = 10;
 
     public Player() {
         super(50,50, PLAYER_WIDTH , PLAYER_HEIGHT);
+        loadPlayerSprite();
+    }
+
+    public void loadPlayerSprite() {
+        playerImage = new BufferedImage[6];
+        BufferedImage image = LoadSave.GetResourceImage(LoadSave.PLAYER_IMG);
+
+        if (image != null) {
+            for (int y = 0; y < 1; y++) {
+                for (int x = 0; x < 6; x++) {
+                    int index = (y * 3) + x;
+                    playerImage[index] = image.getSubimage(x * 128, y * 128, 128, 128);
+                }
+            }
+        }
     }
 
     @Override
     public void render(Graphics g) {
         g.setColor(Color.RED);
-        g.fillRect(x,y, PLAYER_WIDTH, PLAYER_HEIGHT);
+        g.drawRect(x,y, PLAYER_WIDTH, PLAYER_HEIGHT);
+        g.drawImage(playerImage[0], x -38 ,y -46, 96,96,null);
     }
 
     @Override
@@ -76,20 +95,38 @@ public class Player extends Entity{
         }
 
         //Jump
-        if (jump && onGround) {
+        if (jump && onGround && !isJumping) {
             velocityY = - jump_speed;
             onGround = false;
+            isJumping = true;
         }
 
+        System.out.println("Original Y : "+ y + " Velocity Y : "+ velocityY);
         futureY = (int) (y + velocityY);
+
+
+
         if (LevelManager.currentLevelData != null) {
+
+            isJumping = velocityY < 0;
+
             if (CanMoveHere(x, futureY, PLAYER_WIDTH, PLAYER_HEIGHT, LevelManager.currentLevelData)) {
                 y += (int) velocityY;
                 onGround = false;
             }else{
-                onGround = true;
-                velocityY = 0;
+                    onGround = true;
+                    velocityY = 0;
             }
+
+            if (isJumping) {
+                onGround = false;
+            }
+
+
+
+
+
+
         }
 
         // Prevent the player from moving out of bounds horizontally
